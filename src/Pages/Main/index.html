@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+</head>
+
+<body>
+   <h1>Anasayfadasın</h1>
+   <button type="button" id="btnGoTwo" >2.Sayfaya Git</button>
+</body>
+<script>
+    const remote = require('electron').remote;
+    const app = remote.require('./app.js');
+
+    let btnGo = document.getElementById("btnGoTwo");
+    btnGo.addEventListener("click", () => {
+        app.openWindow("PageTwo");
+    });
+</script>
+</html>
