@@ -1,5 +1,5 @@
 const electron = require('electron');
-const {app, BrowserWindow} = electron;
+const { app, BrowserWindow, ipcMain } = electron;
 const path = require("path");
 
 app.on('ready', () => {
@@ -11,16 +11,24 @@ app.on('ready', () => {
         }
     });
     win.loadURL(path.join(__dirname, "/Pages/Main/index.html"));
-})
 
-exports.openWindow = (folderName) => {
-    let win = BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true
-        }
+    ipcMain.on("openWindow", (err, folderName) => {
+
+        newPageWindow = new BrowserWindow({
+            width: 1366,
+            height: 768,
+            webPreferences: {
+                nodeIntegration: true
+            }
+        });
+
+        let editedPath = "/Pages/" + folderName + "/index.html";
+        newPageWindow.loadURL(path.join(__dirname, editedPath));
+
+        newPageWindow.on("close", () => {
+            newPageWindow = null;
+        });
+
     });
-    let editedPath = '/Pages/' + folderName + '/index.html';
-    win.loadURL(path.join(__dirname, editedPath));
-}
+
+})

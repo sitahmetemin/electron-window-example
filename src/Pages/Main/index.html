@@ -10,12 +10,13 @@
    <button type="button" id="btnGoTwo" >2.Sayfaya Git</button>
 </body>
 <script>
-    const remote = require('electron').remote;
-    const app = remote.require('./app.js');
+    const electron = require("electron");
+
+    const {ipcRenderer} = electron;
 
     let btnGo = document.getElementById("btnGoTwo");
     btnGo.addEventListener("click", () => {
-        app.openWindow("PageTwo");
+        ipcRenderer.send("openWindow","PageTwo")
     });
 </script>
 </html>
